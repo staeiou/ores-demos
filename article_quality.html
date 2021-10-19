@@ -29,7 +29,7 @@ $(document).ready(function () {
   get_ores_prediction = function(text){
     $("#output").css("visibility", "hidden");
     $.post({
-      url: ORES_HOST + "/v3/scores/enwiki/12345678/articlequality?features",
+      url: ORES_HOST + "/v3/scores/enwiki/12345678/damaging?features",
       data: {"inject": fully_jsonify({12345678: {"datasource.revision.text": text}})},
       dataType: "json"
     }).done(function(result){
@@ -41,9 +41,9 @@ $(document).ready(function () {
       fmt += " - C: " + Math.round(score['probability']['C']*100) + "%\n";
       fmt += " - Start: " + Math.round(score['probability']['Start']*100) + "%\n";
       fmt += " - Stub: " + Math.round(score['probability']['Stub']*100) + "%\n";
-      $("#result").text(fmt);
+      $("#result").text(score);
 
-      var features = result['enwiki']['scores']['12345678']['articlequality']['features'];
+      var features = result['enwiki']['scores']['12345678']['damaging']['features'];
       feature_names = Object.keys(features);
       feature_names.sort();
       fmt = "Features:\n";
